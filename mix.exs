@@ -8,6 +8,7 @@ defmodule App.MixProject do
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
+      consolidate_protocols: Mix.env() != :dev,
       aliases: aliases(),
       deps: deps()
     ]
@@ -32,6 +33,9 @@ defmodule App.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:bun, "~> 1.4"},
+      {:exinertia, "~> 0.8"},
+      {:igniter, "~> 0.5", only: [:dev, :test]},
       {:bcrypt_elixir, "~> 3.0"},
       {:phoenix, "~> 1.7.19"},
       {:phoenix_ecto, "~> 4.5"},
@@ -69,12 +73,12 @@ defmodule App.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       # FIX This now that tailwind and JS are run in a custom Esbuild
-      "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["tailwind app", "esbuild app", "esbuild ssr"],
+      "assets.setup": ["bun.install --if-missing", "bun install"],
+      "assets.build": ["bun install", "bun build", "bun css"],
       "assets.deploy": [
-        "tailwind app --minify",
-        "esbuild app --minify",
-        "esbuild ssr",
+        "bun install",
+        "bun build --minify",
+        "bun css --minify",
         "phx.digest"
       ]
     ]

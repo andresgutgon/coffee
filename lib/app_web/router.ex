@@ -1,6 +1,16 @@
 defmodule AppWeb.Router do
   use AppWeb, :router
 
+  pipeline :inertia do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_live_flash
+    plug :put_root_layout, html: {AppWeb.Layouts, :inertia_root}
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+    plug Inertia.Plug
+  end
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -14,6 +24,11 @@ defmodule AppWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  scope "/inertia", AppWeb do
+    pipe_through :inertia
+    get "/", PageController, :inertia
   end
 
   scope "/", AppWeb do

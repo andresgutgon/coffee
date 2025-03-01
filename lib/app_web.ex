@@ -48,6 +48,7 @@ defmodule AppWeb do
       import Plug.Conn
 
       unquote(verified_routes())
+      import Inertia.Controller
     end
   end
 
@@ -60,6 +61,7 @@ defmodule AppWeb do
         only: [get_csrf_token: 0, view_module: 1, view_template: 1]
 
       unquote(html_helpers())
+      import Inertia.HTML
     end
   end
 

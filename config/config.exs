@@ -1,5 +1,28 @@
 import Config
 
+config :bun,
+  version: "1.2.1",
+  dev: [
+    args: ~w(x --bun vite),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{}
+  ],
+  install: [
+    args: ~w(i),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{}
+  ],
+  build: [
+    args: ~w(x --bun vite build),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{}
+  ],
+  css: [
+    args: ~w(run tailwindcss --input=css/app.css --output=../priv/static/assets/app.css),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{}
+  ]
+
 config :app,
   ecto_repos: [App.Repo],
   generators: [timestamp_type: :utc_datetime]
@@ -30,9 +53,10 @@ config :inertia,
   endpoint: AppWeb.Endpoint,
   static_paths: ["/assets/app.js"],
   default_version: "1",
-  camelize_props: true,
+  camelize_props: false,
   history: [encrypt: false],
-  ssr: false, # Configured by route where we need/want SSR
+  # Configured by route where we need/want SSR
+  ssr: false,
   raise_on_ssr_failure: config_env() != :prod
 
 # Configures Elixir's Logger

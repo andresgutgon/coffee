@@ -25,8 +25,8 @@ config :app, AppWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "ZJdhzfq3sIfPMX0r8n2Uz3DkjMpObkvG/HtPvIgqZ6tkeryuPXV/2hwNQFxU7LQ5",
   watchers: [
-    pnpm: ["run", "dev:client", cd: Path.expand("../assets", __DIR__)],
-    pnpm: ["run", "dev:server", cd: Path.expand("../assets", __DIR__)],
+    bun: {Bun, :install_and_run, [:dev, ~w()]},
+    bun_css: {Bun, :install_and_run, [:css, ~w(--watch)]}
   ]
 
 config :app, App.Mailer,

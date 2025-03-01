@@ -1,17 +1,7 @@
 {
-  "compilerOptions": {
-    "lib": ["es2020", "dom"],
-    "target": "ES6",
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "jsx": "react-jsx",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "strictPropertyInitialization": false
-  },
-  "include": ["js/**/*"],
-  "exclude": ["node_modules"]
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }
-

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" class="[scrollbar-gutter:stable]">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf-token" content={get_csrf_token()} />
+    <.inertia_title><%= assigns[:page_title] %></.inertia_title>
+    <.inertia_head content={@inertia_head} />
+    <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
+    <%= if dev_env?() do %>
+      <script type="module">
+        import RefreshRuntime from 'http://localhost:5173/@react-refresh'
+        RefreshRuntime.injectIntoGlobalHook(window)
+        window.$RefreshReg$ = () => {}
+        window.$RefreshSig$ = () => (type) => type
+        window.__vite_plugin_react_preamble_installed__ = true
+      </script>
+      <script type="module" src="http://localhost:5173/@vite/client"></script>
+      <script type="module" src="http://localhost:5173/js/inertia.tsx"></script>
+    <% else %>
+      <script type="module" crossorigin defer phx-track-static src={Vite.Manifest.inertia_js()}>
+      </script>
+    <% end %>
+  </head>
+  <body class="bg-white">
+    <%= @inner_content %>
+  </body>
+</html>
