@@ -28,7 +28,7 @@ export default defineConfig(({ command }: ConfigEnv) => {
       root: ROOT,
       plugins: PLUGINS,
       build: {
-        ssr: 'ssr.tsx',
+        ssr: 'js/ssr.tsx',
         outDir: OUT_DIR_SERVER,
         sourcemap: isDev
           ? ('inline' as BuildEnvironmentOptions['sourcemap'])
@@ -55,7 +55,7 @@ export default defineConfig(({ command }: ConfigEnv) => {
           : false,
         minify: !isDev,
         rollupOptions: {
-          input: 'app.tsx',
+          input: 'js/app.tsx',
           output: {
             entryFileNames: 'assets/[name].[hash].js',
             chunkFileNames: 'assets/[name].[hash].js',
