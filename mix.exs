@@ -52,7 +52,9 @@ defmodule App.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
       {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false},
-      {:inertia, "~> 2.2.0"}
+      # Tailwind CSS v3. Next PR I'll update this to TailwindCSS v4
+      {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
+      {:inertia, "~> 2.3.0"}
     ]
   end
 
@@ -68,13 +70,12 @@ defmodule App.MixProject do
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
-      # FIX This now that tailwind and JS are run in a custom Esbuild
-      "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["tailwind app", "esbuild app", "esbuild ssr"],
+      "assets.setup": ["tailwind.install --if-missing"],
+      "assets.build": ["tailwind app", "pnpm build:client", "pnpm build:server"],
       "assets.deploy": [
         "tailwind app --minify",
-        "esbuild app --minify",
-        "esbuild ssr",
+        "pnpm build:client",
+        "pnpm build:server",
         "phx.digest"
       ]
     ]

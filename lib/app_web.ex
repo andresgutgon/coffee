@@ -42,24 +42,24 @@ defmodule AppWeb do
         formats: [:html, :json],
         layouts: [html: AppWeb.Layouts]
 
-      import Inertia.Controller
       use Gettext, backend: AppWeb.Gettext
 
       import Plug.Conn
 
       unquote(verified_routes())
+      import Inertia.Controller
     end
   end
 
   def html do
     quote do
       use Phoenix.Component
-      import Inertia.HTML
 
       import Phoenix.Controller,
         only: [get_csrf_token: 0, view_module: 1, view_template: 1]
 
       unquote(html_helpers())
+      import Inertia.HTML
     end
   end
 

@@ -11,4 +11,5 @@ defmodule AppWeb.Layouts do
   use AppWeb, :html
 
   embed_templates "layouts/*"
+  def dev_env?, do: Application.get_env(:app, :env) == :dev
 end

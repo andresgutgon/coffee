@@ -1,7 +1,6 @@
-// See the Tailwind configuration guide for advanced usage
-// https://tailwindcss.com/docs/configuration
+import tailwindForms from '@tailwindcss/forms'
 
-module.exports = {
+export default {
   content: ['./js/**/*.ts', './js/**/*.tsx'],
   theme: {
     extend: {
@@ -10,5 +9,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require('@tailwindcss/forms')],
+  plugins: [tailwindForms],
 }

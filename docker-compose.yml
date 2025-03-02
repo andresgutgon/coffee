@@ -5,6 +5,7 @@ services:
       dockerfile: docker/Dockerfile
     ports:
       - "4004:4004"
+      - "5173:5173"
     volumes:
       - .:/app
       - ./deps:/app/deps

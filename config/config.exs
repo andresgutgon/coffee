@@ -24,7 +24,16 @@ config :app, AppWeb.Endpoint,
 # at the `config/runtime.exs`.
 config :app, App.Mailer, adapter: Swoosh.Adapters.Local
 
-# config/config.exs
+config :tailwind,
+  version: "3.4.3",
+  app: [
+    args: ~w(
+      --config=tailwind.config.js
+      --input=css/app.css
+      --output=../priv/static/assets/app.css
+    ),
+    cd: Path.expand("../assets", __DIR__)
+  ]
 
 config :inertia,
   endpoint: AppWeb.Endpoint,
