@@ -1,5 +1,3 @@
-import "./css/app.css"
-
 import axios from 'axios'
 
 import { createInertiaApp } from '@inertiajs/react'
