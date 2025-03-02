@@ -1,23 +1,32 @@
-import globals from 'globals'
-import pluginJs from '@eslint/js'
-import tseslint from 'typescript-eslint'
 import pluginPromise from 'eslint-plugin-promise'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import tseslint from 'typescript-eslint'
 
-export default [
-  { files: ['**/*.{js,mjs,cjs,ts}'] },
+export default tseslint.config(
+  { ignores: ['dist'] },
   {
+    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    files: ['**/*.{js,ts,jsx,tsx}'],
     languageOptions: {
+      ecmaVersion: 2020,
       globals: globals.browser,
     },
-  },
-  pluginJs.configs.recommended,
-  pluginPromise.configs['flat/recommended'],
-  eslintPluginPrettierRecommended,
-  ...tseslint.configs.recommended,
-  {
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+      promise: pluginPromise,
+      prettier: eslintPluginPrettierRecommended,
+    },
     rules: {
-      'no-unused-vars': 'off',
+      ...reactHooks.configs.recommended.rules,
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
       '@typescript-eslint/no-unused-vars': [
         'error',
         {
@@ -28,4 +37,4 @@ export default [
       ],
     },
   },
-]
+)
