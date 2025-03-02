@@ -4,8 +4,13 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 const isSSR = process.env.VITE_SSR === 'true'
 
-const OUT_DIR_CLIENT = path.resolve(__dirname, '../../priv/static/assets')
-const OUT_DIR_SERVER = path.resolve(__dirname, '../../priv')
+const OUT_DIR_CLIENT = path.resolve(__dirname, '../priv/static/assets')
+const OUT_DIR_SERVER = path.resolve(__dirname, '../priv')
+
+
+console.log("OUT_DIR_CLIENT", OUT_DIR_CLIENT)
+console.log("OUT_DIR_SERVER", OUT_DIR_SERVER)
+
 const ROOT = path.resolve(__dirname, 'js')
 const ALIAS = {
   '@': path.resolve(__dirname, './js'),
@@ -28,12 +33,13 @@ export default defineConfig(({ command }: ConfigEnv) => {
       root: ROOT,
       plugins: PLUGINS,
       build: {
-        ssr: 'js/ssr.tsx',
+        ssr: 'ssr.tsx',
         outDir: OUT_DIR_SERVER,
         sourcemap: isDev
           ? ('inline' as BuildEnvironmentOptions['sourcemap'])
           : false,
         minify: false,
+        emptyOutDir: true,
         rollupOptions: {
           external: ['fonts/*', 'images/*'],
         },
@@ -55,7 +61,7 @@ export default defineConfig(({ command }: ConfigEnv) => {
           : false,
         minify: !isDev,
         rollupOptions: {
-          input: 'js/app.tsx',
+          input: 'app.tsx',
           output: {
             entryFileNames: 'assets/[name].[hash].js',
             chunkFileNames: 'assets/[name].[hash].js',

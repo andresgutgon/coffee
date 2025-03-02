@@ -1,5 +1,4 @@
 import axios from 'axios'
-
 import { createInertiaApp } from '@inertiajs/react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 import { resolvePage } from './utils/pageHelpers'

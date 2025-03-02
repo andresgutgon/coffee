@@ -27,6 +27,7 @@ config :app, AppWeb.Endpoint,
   watchers: [
     pnpm: ["run", "dev:client", cd: Path.expand("../assets", __DIR__)],
     pnpm: ["run", "dev:server", cd: Path.expand("../assets", __DIR__)],
+    tailwind: {Tailwind, :install_and_run, [:app, ~w(--watch)]}
   ]
 
 config :app, App.Mailer,

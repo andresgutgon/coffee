@@ -12,7 +12,7 @@
   ],
   "author": "Andrés Gutiérrez",
   "scripts": {
-    "dev:client": "vite --wacth",
+    "dev:client": "vite --host 0.0.0.0",
     "dev:server": "VITE_SSR=true vite build --watch",
     "build:client": "vite build",
     "build:server": "VITE_SSR=true vite build",
