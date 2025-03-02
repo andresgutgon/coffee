@@ -4,13 +4,6 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 const isSSR = process.env.VITE_SSR === 'true'
 
-const OUT_DIR_CLIENT = path.resolve(__dirname, '../priv/static/assets')
-const OUT_DIR_SERVER = path.resolve(__dirname, '../priv')
-
-console.log('OUT_DIR_CLIENT', OUT_DIR_CLIENT)
-console.log('OUT_DIR_SERVER', OUT_DIR_SERVER)
-
-const ROOT = path.resolve(__dirname, 'js')
 const ALIAS = {
   '@': path.resolve(__dirname, './js'),
 }
@@ -29,11 +22,11 @@ export default defineConfig(({ command }: ConfigEnv) => {
 
   if (isSSR) {
     return {
-      root: ROOT,
+      root: path.resolve(__dirname, 'js'),
       plugins: PLUGINS,
       build: {
         ssr: 'ssr.tsx',
-        outDir: OUT_DIR_SERVER,
+        outDir: '../../priv',
         sourcemap: isDev
           ? ('inline' as BuildEnvironmentOptions['sourcemap'])
           : false,
@@ -42,18 +35,25 @@ export default defineConfig(({ command }: ConfigEnv) => {
           external: ['fonts/*', 'images/*'],
         },
       },
+      resolve: {
+        alias: ALIAS,
+      },
       ssr: {
-        noExternal: true,
-        resolve: {
-          alias: ALIAS,
-        },
+        noExternal: true as const,
       },
     }
   } else {
     return {
-      root: ROOT,
+      plugins: PLUGINS,
+      publicDir: 'static',
+      resolve: {
+        alias: {
+          '@': path.resolve(__dirname, './js'),
+        },
+      },
       build: {
-        outDir: OUT_DIR_CLIENT,
+        outDir: '../priv/static',
+        emptyOutDir: false,
         target: 'esnext',
         polyfillDynamicImport: true,
         manifest: 'vite_manifest.json',
@@ -62,7 +62,9 @@ export default defineConfig(({ command }: ConfigEnv) => {
           : false,
         minify: !isDev,
         rollupOptions: {
-          input: 'app.tsx',
+          input: {
+            app: 'js/app.tsx',
+          },
           output: {
             entryFileNames: 'assets/[name].[hash].js',
             chunkFileNames: 'assets/[name].[hash].js',
@@ -70,9 +72,6 @@ export default defineConfig(({ command }: ConfigEnv) => {
           },
           external: ['fonts/*', 'images/*'],
         },
-      },
-      resolve: {
-        alias: ALIAS,
       },
     }
   }

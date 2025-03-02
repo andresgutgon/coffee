@@ -66,7 +66,8 @@ config :app, App.Mailer,
 config :app, AppWeb.Endpoint,
   live_reload: [
     patterns: [
-      ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
+      # NOTE: Exclude `js` from live_reload. This is handled by Vite.
+      ~r"priv/static/(?!uploads/).*(css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/app_web/(controllers|live|components)/.*(ex|heex)$"
     ]
