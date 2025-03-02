@@ -7,9 +7,8 @@ const isSSR = process.env.VITE_SSR === 'true'
 const OUT_DIR_CLIENT = path.resolve(__dirname, '../priv/static/assets')
 const OUT_DIR_SERVER = path.resolve(__dirname, '../priv')
 
-
-console.log("OUT_DIR_CLIENT", OUT_DIR_CLIENT)
-console.log("OUT_DIR_SERVER", OUT_DIR_SERVER)
+console.log('OUT_DIR_CLIENT', OUT_DIR_CLIENT)
+console.log('OUT_DIR_SERVER', OUT_DIR_SERVER)
 
 const ROOT = path.resolve(__dirname, 'js')
 const ALIAS = {
@@ -39,13 +38,15 @@ export default defineConfig(({ command }: ConfigEnv) => {
           ? ('inline' as BuildEnvironmentOptions['sourcemap'])
           : false,
         minify: false,
-        emptyOutDir: true,
         rollupOptions: {
           external: ['fonts/*', 'images/*'],
         },
       },
-      resolve: {
-        alias: ALIAS,
+      ssr: {
+        noExternal: true,
+        resolve: {
+          alias: ALIAS,
+        },
       },
     }
   } else {

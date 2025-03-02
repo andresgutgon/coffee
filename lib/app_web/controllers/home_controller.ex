@@ -2,7 +2,7 @@ defmodule AppWeb.HomeController do
   use AppWeb, :controller
 
   def index(conn, _params) do
-    ssr = true
+    ssr = false
     conn
     |> assign_prop(:first_name, "Bob")
     |> assign_prop(:ssr, ssr)
